@@ -2,9 +2,10 @@ import { Calendar, Car, ChevronRight, Shield } from "lucide-react";
 import CarCard from "@/components/car-card";
 import HoemSearch from "@/components/home-search";
 import { Button } from "@/components/ui/button";
-import { bodyTypes, carMakes, featuredCars } from "@/lib/data";
+import { bodyTypes, carMakes, faqItems, featuredCars } from "@/lib/data";
 import Link from "next/link";
 import Image from "next/image";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 export default function Home() {
   return (
@@ -153,6 +154,23 @@ export default function Home() {
               </Link>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* FAQ Section with Accordion */}
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold text-center mb-8">
+            Frequently Asked Questions
+          </h2>
+          <Accordion type="single" collapsible className="w-full">
+            {faqItems.map((faq, index) => (
+              <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionTrigger>{faq.question}</AccordionTrigger>
+                <AccordionContent>{faq.answer}</AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </section>
     </div>
