@@ -1,8 +1,20 @@
 import React from 'react'
+import { notFound } from 'next/navigation';
+import { getAdmin } from '@/actions/admin'
+import Header from '@/components/header';
 
-function AdminLayout() {
+const AdminLayout = async () => {
+
+  const admin = await getAdmin();
+
+  if(!admin.authorized){
+    return notFound();
+  }
+
   return (
-    <div>layout</div>
+    <div className='h-full'>
+      <Header isAdminPage={true} />
+    </div>
   )
 }
 
