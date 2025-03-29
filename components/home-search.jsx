@@ -6,7 +6,7 @@ import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'sonner'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 function HoemSearch() {
   const router = useRouter();
