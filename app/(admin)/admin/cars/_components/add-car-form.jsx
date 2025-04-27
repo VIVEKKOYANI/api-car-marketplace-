@@ -12,8 +12,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useDropzone } from 'react-dropzone';
-import { Upload } from 'lucide-react';
+import { Loader2, Upload, X } from 'lucide-react';
 import { toast } from 'sonner'
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 // Predefined options
 const fuelTypes = ["Petrol", "Diesel", "Electric", "Hybrid", "Plug-in Hybrid"];
@@ -131,6 +133,10 @@ function AddCarForm() {
     },
     maxFiles: true,
   })
+
+  const removeImage = (index) => {
+    setUploadedImages((pre) => pre.filter((_, i) => i !== index));
+  }
 
   return (
     <div>
@@ -406,6 +412,39 @@ function AddCarForm() {
                     <p className="text-xs text-red-500 mt-1">{imageError}</p>
                   )}
                 </div>
+
+                {uploadedImages.length > 0 && (
+                  <div className='mt-4'>
+                    <h3 className='text-sm font-medium mb-2'>Uploaded Images ({uploadedImages.length})</h3>
+                    <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5'>
+                      {uploadedImages.map((image, index) => {
+                        return (
+                          <div key={index} className="relative group">
+                            <Image
+                              src={image}
+                              alt={`Car image ${index + 1}`}
+                              height={50}
+                              width={50}
+                              className='h-28 w-full object-cover rounded-md'
+                              priority
+                            />
+                            <Button
+                            type="button"
+                            size="icon"
+                            variant="destructive"
+                            className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => removeImage(index)}
+                            >
+                              <X className='h3 w-3' />
+                            </Button>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                <Button type="submit" className="w-full md:w-auto" disabled={true} >{true ? <><Loader2 className='mr-2 h-4 w-4 animate-spin' /> Adding Car...</> : "Add Car"}</Button>
               </form>
             </CardContent>
           </Card>
